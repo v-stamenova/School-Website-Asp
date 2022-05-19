@@ -22,6 +22,8 @@ namespace DataAccess
 
 		public DbSet<User> Users { get; set; }
 
+		public DbSet<Article> Articles { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Employee>(entity =>
@@ -115,6 +117,11 @@ namespace DataAccess
 					.IsRequired();
 
 				entity.Property(e => e.Subtitle);
+
+				entity.Property(e => e.CreatedOn)
+					.IsRequired();
+
+				entity.Property(e => e.Content);
 
 				entity.HasOne(e => e.PostedBy)
 					.WithMany(а => а.Articles)
