@@ -172,3 +172,8 @@ nav.navbar{
 	font-size: 13px !important;
 	font-weight: 800 !important;
 }
+
+.custom-heading {
+	font-weight: 800; 
+	font-size: 70px;
+}

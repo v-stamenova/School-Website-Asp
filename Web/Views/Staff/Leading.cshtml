@@ -1,0 +1,34 @@
+﻿@model List<Teacher> 
+
+<header class="masthead" style="background-image: url('../../images/banners/leading.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">Ръководство</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			@foreach (Teacher teacher in Model)
+			{
+				<div class="post-preview">
+					<a asp-controller="staff" asp-action="teacher" asp-route-id="@teacher.Username">
+						<h2 class="post-title bold">
+							@teacher.FirstName @teacher.MiddleName @teacher.LastName
+						</h2>
+						<h3 class="post-subtitle">
+							@teacher.AdditionalRole
+						</h3>
+					</a>
+				</div>
+				<hr>
+			}
+		</div>
+	</div>
+</div>
