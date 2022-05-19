@@ -20,6 +20,8 @@ namespace DataAccess
 
 		public DbSet<Teacher> Teachers { get; set; }
 
+		public DbSet<User> Users { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Employee>(entity =>
@@ -96,6 +98,37 @@ namespace DataAccess
 					.WithMany(s => s.Teachers)
 					.HasForeignKey(e => e.SubjectId);
 			});
+
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity.HasKey(e => e.Username);
+
+				entity.Property(e => e.Password)
+					.IsRequired();
+			});
+
+			modelBuilder.Entity<Article>(entity =>
+			{
+				entity.HasKey(e => e.Id);
+
+				entity.Property(e => e.Title)
+					.IsRequired();
+
+				entity.Property(e => e.Subtitle);
+
+				entity.HasOne(e => e.PostedBy)
+					.WithMany(а => а.Articles)
+					.HasForeignKey(е => е.PostedById);
+			});
+
+			modelBuilder.Entity<User>().HasData
+			(
+				new User()
+				{
+					Username = "Admin",
+					Password = "RandomPassword"
+				}
+			);
 		}
 	}
 }
