@@ -62,5 +62,12 @@ namespace Web.Controllers
 		{
 			return View("Board", this._memberService.GetMuncipalityBoardMembers());
 		}
+
+		[HttpGet]
+		[Route("staff/teacher/{id}")]
+		public IActionResult Teacher([FromRoute] string id)
+		{
+			return View(this._teacherService.GetTeacher(id));
+		}
 	}
 }
