@@ -1,6 +1,6 @@
 ﻿@model LoginViewModel
 
-<div class="container bg-dark text-white my-5 p-5 open-sans">
+<div class="container my-5 p-5 open-sans">
 	<div class="row justify-content-center">
 		<div class="col-md-6 rounded">
 			<form asp-action="Login" asp-controller="User" method="post">
@@ -21,8 +21,8 @@
 					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<br />
-				<div class="form-group align-items-center text-center">
-					<input type="submit" value="Вход" class="btn btn-info btn-lg" />
+				<div class="form-group pt-4 open-sans bold">
+					<input type="submit" value="Влез" class="btn btn-block big-button" style="font-size: 20px;" />
 				</div>
 			</form>
 		</div>

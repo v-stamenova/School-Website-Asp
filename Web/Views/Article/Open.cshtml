@@ -1,0 +1,36 @@
+﻿@model Article
+
+<div class="container open-sans">
+	<div class="row mb-3">
+		<div class="col-md-12">
+			<h2 class="mt-5 bold">@Model.Title</h2>
+			@if (Model.Subtitle is not null)
+			{
+				<h4>@Model.Subtitle  - Каченo на @Model.CreatedOn.ToShortDateString()</h4>
+			}
+			else
+			{
+				<h4>Каченo на @Model.CreatedOn.ToShortDateString()</h4>
+			}
+		</div>
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-md-12">
+			<h5>
+				@Model.Content
+			</h5>
+			@if (Model.FilePath is not null)
+			{
+				@if (CheckIf.PathIsOfImage(Model.FilePath))
+				{
+					<img class="img-fluid" src="~/@Model.FilePath" />
+				}
+				else
+				{
+					<a href="~/@Model.FilePath">Приложен документ</a>
+				}
+			}
+		</div>
+	</div>
+</div>
