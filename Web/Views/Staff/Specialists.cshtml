@@ -1,0 +1,42 @@
+﻿@inject EmployeeService employeeService
+@inject TeacherService teacherService
+
+<header class="masthead" style="background-image: url('../../images/banners/leading.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">РНИКТ и ПС</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			<div class="post-preview">
+				<a asp-controller="staff" asp-action="teacher" asp-route-id="srebcheva">
+					<h2 class="post-title bold">
+						@teacherService.GetTeacher("srebcheva").FirstName @teacherService.GetTeacher("srebcheva").MiddleName @teacherService.GetTeacher("srebcheva").LastName
+					</h2>
+					<h3 class="post-subtitle">
+						@teacherService.GetTeacher("srebcheva").AdditionalRole
+					</h3>
+				</a>
+			</div>
+			<hr />
+			<div class="post-preview">
+				<a>
+					<h2 class="post-title bold">
+						@employeeService.GetPsychologist().FirstName @employeeService.GetPsychologist().MiddleName @employeeService.GetPsychologist().LastName
+					</h2>
+					<h3 class="post-subtitle">
+						@employeeService.GetPsychologist().JobDescription
+					</h3>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

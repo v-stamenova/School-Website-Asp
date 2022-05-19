@@ -1,0 +1,75 @@
+﻿@model List<Member>
+
+<header class="masthead" style="background-image: url('../../images/banners/leading.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					@if (Model[0].IsInSchoolBoard)
+					{
+						<h1 class="open-sans custom-heading">Училищно настоятелство</h1>
+					}
+					else
+					{
+						<h1 class="open-sans custom-heading">Обществен съвет</h1>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+@if (Model[0].IsInSchoolBoard)
+{
+	<div class="container">
+		<div class="row text-center">
+			<div class="col">
+				<h4 class="bold open-sans">Заявление за член на училищното настоятелство</h4>
+				<h4 class="bold open-sans">Банкова сметка</h4>
+				<h4 class="bold open-sans">Устав</h4>
+				<hr>
+				<h4 class="bold open-sans text-uppercase">Данни</h4>
+				<h4 class="bold open-sans">на членовете на Управителния съвет на</h4>
+				<h4 class="bold open-sans">"Училищно настоятелство - ППМГ "Никола Обрешков", гр. Казанлък</h4>
+				<table class="table lora" style="margin-top: 50px; font-size: 20px;">
+					<tbody>
+						@foreach (Member member in Model)
+						{
+							<tr>
+								<td>@member.Role.Name</td>
+								<td>@member.FirstName @member.MiddleName @member.LastName</td>
+								<td>@member.Email</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<hr />
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<div class="container">
+		<div class="row text-center">
+			<div class="col">
+				<h4 class="bold open-sans">Обществен съвет</h4>
+				<h4 class="bold open-sans">към ППМГ "Никола Обрешков", гр. Казанлък</h4>
+				<h4 class="bold open-sans">(обявен със Заповед № РД 11-261/30.12.2019 г. на директора на ППМГ "Никола Обрешков", гр. Казанлък)</h4>
+				<table class="table lora" style="margin-top: 50px; font-size: 20px;">
+					<tbody>
+						@foreach (Member member in Model)
+						{
+							<tr>
+								<td>@member.Role.Name</td>
+								<td>@member.FirstName @member.MiddleName @member.LastName</td>
+								<td>@member.Email</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<hr />
+			</div>
+		</div>
+	</div>
+}

@@ -15,5 +15,9 @@ namespace Web.Services
 		}
 
 		public List<Employee> GetEmployees() => this._dbContext.Employees.ToList();
+
+		public List<Employee> GetAdministration() => this.GetEmployees().Where(x => !x.JobDescription.ToLower().Contains("психолог")).ToList();
+
+		public Employee GetPsychologist() => this.GetEmployees().First(x => x.JobDescription.ToLower().Contains("психолог"));
 	}
 }

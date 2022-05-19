@@ -29,6 +29,7 @@ namespace Web
 			services.AddControllersWithViews();
 			services.AddTransient<TeacherService>();
 			services.AddTransient<EmployeeService>();
+			services.AddTransient<SubjectService>();
 			services.AddTransient<MemberService>();
 			services.AddDbContext<SchoolDbContext>(options =>
 					options.UseSqlServer(Configuration.GetConnectionString("Connection")));
