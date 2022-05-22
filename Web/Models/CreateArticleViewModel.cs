@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
@@ -11,6 +12,10 @@ namespace Web.Models
 		public string Subtitle { get; set; }
 
 		public string Content { get; set; }
+
+		public string Type { get; set; }
+
+		public string Heading { get; set; }
 
 		public string FileUrl { get; set; }
 		public IFormFile File { get; set; }

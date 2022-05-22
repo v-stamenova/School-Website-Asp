@@ -14,6 +14,9 @@ namespace DataAccess.Models
 
 		public DateTime CreatedOn { get; set; }
 
+		public ArticleType Type { get; set; }
+		public string TypeId { get; set; }
+
 		public User PostedBy { get; set; }
 		public string PostedById { get; set; }
 	}

@@ -4,14 +4,16 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220520164316_AddArticleType")]
+    partial class AddArticleType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,57 +47,14 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostedById");
 
-                    b.HasIndex("TypeId");
-
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ArticleType", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Heading")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Types");
-
-                    b.HasData(
-                        new
-                        {
-                            Name = "News",
-                            Heading = "съобщение"
-                        },
-                        new
-                        {
-                            Name = "SchoolPlan",
-                            Heading = "училищен план"
-                        },
-                        new
-                        {
-                            Name = "Course",
-                            Heading = "курс"
-                        },
-                        new
-                        {
-                            Name = "AfterSeventhGrade",
-                            Heading = "новина относно приема след 7. клас"
-                        },
-                        new
-                        {
-                            Name = "AfterFourthGrade",
-                            Heading = "новина относно приема след 4. клас"
-                        });
                 });
 
             modelBuilder.Entity("DataAccess.Models.Employee", b =>
@@ -257,13 +216,7 @@ namespace DataAccess.Migrations
                         .WithMany("Articles")
                         .HasForeignKey("PostedById");
 
-                    b.HasOne("DataAccess.Models.ArticleType", "Type")
-                        .WithMany("Articles")
-                        .HasForeignKey("TypeId");
-
                     b.Navigation("PostedBy");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Member", b =>
@@ -284,11 +237,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("SubjectId");
 
                     b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ArticleType", b =>
-                {
-                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>

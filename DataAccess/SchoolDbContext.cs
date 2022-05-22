@@ -24,6 +24,8 @@ namespace DataAccess
 
 		public DbSet<Article> Articles { get; set; }
 
+		public DbSet<ArticleType> Types { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Employee>(entity =>
@@ -123,9 +125,21 @@ namespace DataAccess
 
 				entity.Property(e => e.Content);
 
+				entity.HasOne(e => e.Type)
+					.WithMany(t => t.Articles)
+					.HasForeignKey(e => e.TypeId);
+
 				entity.HasOne(e => e.PostedBy)
 					.WithMany(а => а.Articles)
 					.HasForeignKey(е => е.PostedById);
+			});
+
+			modelBuilder.Entity<ArticleType>(entity =>
+			{
+				entity.HasKey(e => e.Name);
+
+				entity.Property(e => e.Heading)
+					.IsRequired();
 			});
 
 			modelBuilder.Entity<User>().HasData
@@ -134,6 +148,35 @@ namespace DataAccess
 				{
 					Username = "Admin",
 					Password = "RandomPassword"
+				}
+			);
+
+			modelBuilder.Entity<ArticleType>().HasData
+			(
+				new ArticleType()
+				{
+					Name = "News",
+					Heading = "съобщение"
+				},
+				new ArticleType()
+				{
+					Name = "SchoolPlan",
+					Heading = "училищен план"
+				},
+				new ArticleType()
+				{
+					Name = "Course",
+					Heading = "курс"
+				},
+				new ArticleType()
+				{
+					Name = "AfterSeventhGrade",
+					Heading = "новина относно приема след 7. клас"
+				},
+				new ArticleType()
+				{
+					Name = "AfterFourthGrade",
+					Heading = "новина относно приема след 4. клас"
 				}
 			);
 		}

@@ -1,0 +1,77 @@
+﻿@model CategoryViewModel
+
+<header class="masthead" style="background-image: url('../../images/banners/cand.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">@Model.Heading</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row pb-5">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			@foreach (Article article in Model.Articles)
+			{
+				<div class="post-preview">
+					@if (article.Content is not null)
+					{
+						<a asp-controller="article" asp-action="open" asp-route-id="@article.Id">
+							<h2 class="post-title bold">
+								@article.Title
+							</h2>
+							@if (article.Subtitle is not null)
+							{
+								<h4 class="post-subtitle">
+									@article.Subtitle - Каченo на @article.CreatedOn.ToShortDateString()
+								</h4>
+							}
+							else
+							{
+								<h4 class="post-subtitle">
+									Каченo на @article.CreatedOn.ToShortDateString()
+								</h4>
+							}
+						</a>
+					}
+					else if (article.FilePath is not null)
+					{
+						<a href="@article.FilePath">
+							<h2 class="post-title bold">
+								@article.Title
+							</h2>
+							@if (article.Subtitle is not null)
+							{
+								<h4 class="post-subtitle">
+									@article.Subtitle - Каченo на @article.CreatedOn.ToShortDateString()
+								</h4>
+							}
+							else
+							{
+								<h4 class="post-subtitle">
+									Каченo на @article.CreatedOn.ToShortDateString()
+								</h4>
+							}
+						</a>
+					}
+					else
+					{
+						<a>
+							<h2 class="post-title bold">
+								@article.Title
+							</h2>
+							<h4 class="post-subtitle">
+								Каченo на @article.CreatedOn.ToShortDateString()
+							</h4>
+						</a>
+					}
+				</div>
+				<hr>
+			}
+		</div>
+	</div>
+</div>

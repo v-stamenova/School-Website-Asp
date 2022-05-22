@@ -17,6 +17,9 @@ namespace Web.Services
 
 		public List<Article> GetArticles() => this._dbContext.Articles.Include(x => x.PostedBy).ToList();
 
+		public List<Article> GetArticlesFromType(string typeId) => this._dbContext.Articles.Include(x => x.PostedBy)
+			.Include(x => x.Type).Where(x => x.TypeId == typeId).OrderByDescending(x => x.CreatedOn).ToList();
+
 		public void CreateArticle(Article article)
 		{
 			this._dbContext.Add(article);

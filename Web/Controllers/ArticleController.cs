@@ -16,23 +16,29 @@ namespace Web.Controllers
 	{
 		private IWebHostEnvironment _webHost;
 		private ArticleService _articleService;
+		private ArticleTypeService _articleTypeService;
 
-		public ArticleController(IWebHostEnvironment webHost, ArticleService articleService)
+		public ArticleController(IWebHostEnvironment webHost, ArticleService articleService, ArticleTypeService articleTypeService)
 		{
 			this._webHost = webHost;
 			this._articleService = articleService;
+			this._articleTypeService = articleTypeService;
 		}
 
 		public IActionResult Index()
 		{
-			List<Article> articles = this._articleService.GetArticles().OrderByDescending(x => x.CreatedOn).ToList();
-			return View(articles);
+			List<Article> newsArticles = this._articleService.GetArticlesFromType("news");
+			return View(newsArticles);
 		}
 
 		[HttpGet]
-		public IActionResult Create()
+		[Route("article/create/{typeString}")]
+		public IActionResult Create([FromRoute] string typeString)
 		{
-			return View(new CreateArticleViewModel());
+			CreateArticleViewModel model = new CreateArticleViewModel();
+			model.Type = typeString;
+			model.Heading = this._articleTypeService.GetType(model.Type).Heading;
+			return View(model);
 
 			//if (Logged.IsLogged())
 			//{
@@ -45,7 +51,8 @@ namespace Web.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create(CreateArticleViewModel model)
+		[Route("article/create/{typeString}")]
+		public IActionResult Create([FromForm] CreateArticleViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -55,6 +62,7 @@ namespace Web.Controllers
 				article.Subtitle = model.Subtitle;
 				article.CreatedOn = DateTime.Now;
 				article.PostedBy = null;
+				article.Type = this._articleTypeService.GetType(model.Type);
 
 				if (model.File != null)
 				{

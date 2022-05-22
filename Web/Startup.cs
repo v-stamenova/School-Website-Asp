@@ -33,6 +33,7 @@ namespace Web
 			services.AddTransient<SubjectService>();
 			services.AddTransient<ArticleService>();
 			services.AddTransient<MemberService>();
+			services.AddTransient<ArticleTypeService>();
 			services.AddDbContext<SchoolDbContext>(options =>
 					options.UseSqlServer(Configuration.GetConnectionString("Connection")));
 		}
