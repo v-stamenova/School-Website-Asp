@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Models.Enums;
+using System;
 
 namespace DataAccess.Models
 {
@@ -16,6 +17,10 @@ namespace DataAccess.Models
 
 		public ArticleType Type { get; set; }
 		public string TypeId { get; set; }
+
+		public TargetGroup? Target { get; set; }
+		
+		public NormDocumentType? NormType { get; set; }
 
 		public User PostedBy { get; set; }
 		public string PostedById { get; set; }

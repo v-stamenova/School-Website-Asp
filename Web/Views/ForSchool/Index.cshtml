@@ -1,0 +1,65 @@
+﻿@{
+	ViewData["Title"] = "За училището";
+}
+
+<main>
+	<header class="masthead" style=" background-image: url('../../images/banners/home.jpg') !important;">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					<div class="site-heading">
+						<h1 class="open-sans custom-heading">За училището</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<article>
+		<div class="container pb-3">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					<div class="post-preview">
+						<a asp-controller="ForSchool" asp-action="History">
+							<h2 class="post-title text-center">
+								История
+							</h2>
+						</a>
+					</div>
+					<hr>
+					<div class="post-preview">
+						<a asp-controller="Staff" asp-action="Index">
+							<h2 class="post-title text-center">
+								Състав
+							</h2>
+						</a>
+					</div>
+					<hr>
+					<div class="post-preview">
+						<a asp-controller="ForSchool" asp-action="Class">
+							<h2 class="post-title text-center">
+								Паралелки
+							</h2>
+						</a>
+					</div>
+					<hr>
+					<div class="post-preview">
+						<a asp-controller="ForSchool" asp-action="Grading">
+							<h2 class="post-title text-center">
+								Оценяване
+							</h2>
+						</a>
+					</div>
+					<hr>
+					<div class="post-preview">
+						<a asp-controller="ForSchool" asp-action="Documents">
+							<h2 class="post-title text-center">
+								Документи
+							</h2>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</main>

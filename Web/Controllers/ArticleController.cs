@@ -64,6 +64,16 @@ namespace Web.Controllers
 				article.PostedBy = null;
 				article.Type = this._articleTypeService.GetType(model.Type);
 
+				if(model.Type == "NormDocument")
+				{
+					article.NormType = ParseEnum.NormDocumentType(model.NormDocumentType);
+				}
+
+				if(model.Type == "News")
+				{
+					article.Target = ParseEnum.TargetGroup(model.TargetGroup);
+				}
+
 				if (model.File != null)
 				{
 					string patern = Path.Combine(this._webHost.WebRootPath, "files");

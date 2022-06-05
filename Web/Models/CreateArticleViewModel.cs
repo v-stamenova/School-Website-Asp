@@ -17,6 +17,10 @@ namespace Web.Models
 
 		public string Heading { get; set; }
 
+		public string TargetGroup { get; set; }
+
+		public string NormDocumentType { get; set; }
+
 		public string FileUrl { get; set; }
 		public IFormFile File { get; set; }
 	}

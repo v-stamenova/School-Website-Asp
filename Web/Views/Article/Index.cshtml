@@ -23,16 +23,22 @@
 						<a asp-controller="article" asp-action="open" asp-route-id="@article.Id">
 							<h2 class="post-title bold">
 								@article.Title
+								@if (Display.IsNewArticle(article.CreatedOn))
+								{
+									<span class="badge badge-secondary">Ново</span>
+								}
 							</h2>
 							@if (article.Subtitle is not null)
 							{
 								<h4 class="post-subtitle">
+									<span class="badge badge-pill badge-info">@Display.UserFriendlyTargetGroup(article.Target.Value)</span>
 									@article.Subtitle - Каченo на @article.CreatedOn.ToShortDateString()
 								</h4>
 							}
 							else
 							{
 								<h4 class="post-subtitle">
+									<span class="badge badge-pill badge-info">@Display.UserFriendlyTargetGroup(article.Target.Value)</span>
 									Каченo на @article.CreatedOn.ToShortDateString()
 								</h4>
 							}
@@ -43,16 +49,22 @@
 						<a href="@article.FilePath">
 							<h2 class="post-title bold">
 								@article.Title
+								@if (Display.IsNewArticle(article.CreatedOn))
+								{
+									<span class="badge badge-secondary">Ново</span>
+								}
 							</h2>
 							@if (article.Subtitle is not null)
 							{
 								<h4 class="post-subtitle">
+									<span class="badge badge-pill badge-info">@Display.UserFriendlyTargetGroup(article.Target.Value)</span>
 									@article.Subtitle - Каченo на @article.CreatedOn.ToShortDateString()
 								</h4>
 							}
 							else
 							{
 								<h4 class="post-subtitle">
+									<span class="badge badge-pill badge-info">@Display.UserFriendlyTargetGroup(article.Target.Value)</span>
 									Каченo на @article.CreatedOn.ToShortDateString()
 								</h4>
 							}
@@ -63,8 +75,13 @@
 						<a>
 							<h2 class="post-title bold">
 								@article.Title
+								@if (Display.IsNewArticle(article.CreatedOn))
+								{
+									<span class="badge badge-secondary">Ново</span>
+								}
 							</h2>
 							<h4 class="post-subtitle">
+								<span class="badge badge-pill badge-info">@Display.UserFriendlyTargetGroup(article.Target.Value)</span>
 								Каченo на @article.CreatedOn.ToShortDateString()
 							</h4>
 						</a>

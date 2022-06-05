@@ -132,6 +132,10 @@ namespace DataAccess
 				entity.HasOne(e => e.PostedBy)
 					.WithMany(а => а.Articles)
 					.HasForeignKey(е => е.PostedById);
+
+				entity.Property(e => e.NormType);
+
+				entity.Property(e => e.Target);
 			});
 
 			modelBuilder.Entity<ArticleType>(entity =>
