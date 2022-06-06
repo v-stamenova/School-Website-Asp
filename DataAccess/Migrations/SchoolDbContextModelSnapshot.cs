@@ -19,6 +19,30 @@ namespace DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DataAccess.Models.AdditionalFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Heading")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("AdditionalFiles");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Article", b =>
                 {
                     b.Property<int>("Id")
@@ -257,6 +281,17 @@ namespace DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DataAccess.Models.AdditionalFile", b =>
+                {
+                    b.HasOne("DataAccess.Models.Article", "Article")
+                        .WithMany("AdditionalFiles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Article", b =>
                 {
                     b.HasOne("DataAccess.Models.User", "PostedBy")
@@ -290,6 +325,11 @@ namespace DataAccess.Migrations
                         .HasForeignKey("SubjectId");
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Article", b =>
+                {
+                    b.Navigation("AdditionalFiles");
                 });
 
             modelBuilder.Entity("DataAccess.Models.ArticleType", b =>

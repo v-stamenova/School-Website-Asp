@@ -26,6 +26,8 @@ namespace DataAccess
 
 		public DbSet<ArticleType> Types { get; set; }
 
+		public DbSet<AdditionalFile> AdditionalFiles { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Employee>(entity =>
@@ -144,6 +146,20 @@ namespace DataAccess
 
 				entity.Property(e => e.Heading)
 					.IsRequired();
+			});
+
+			modelBuilder.Entity<AdditionalFile>(entity =>
+			{
+				entity.HasKey(e => e.Id);
+
+				entity.Property(e => e.Heading);
+
+				entity.Property(e => e.Address)
+					.IsRequired();
+
+				entity.HasOne(e => e.Article)
+					.WithMany(a => a.AdditionalFiles)
+					.HasForeignKey(e => e.ArticleId);
 			});
 
 			modelBuilder.Entity<User>().HasData

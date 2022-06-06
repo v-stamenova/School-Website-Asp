@@ -1,10 +1,16 @@
 ﻿using DataAccess.Models.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace DataAccess.Models
 {
 	public class Article : BaseEntity
 	{
+		public Article()
+		{
+			this.AdditionalFiles = new List<AdditionalFile>();
+		}
+
 		public string Title { get; set; }
 
 		public string Subtitle { get; set; }
@@ -24,5 +30,7 @@ namespace DataAccess.Models
 
 		public User PostedBy { get; set; }
 		public string PostedById { get; set; }
+
+		public List<AdditionalFile> AdditionalFiles { get; set; }
 	}
 }

@@ -6,9 +6,9 @@
 			<h2 class="mt-5 bold">@Model.Title</h2>
 			@if (Model.Subtitle is not null)
 			{
-				<h4>@Model.Subtitle  - Каченo на @Model.CreatedOn.ToShortDateString()</h4>
+				<h4>@Model.Subtitle</h4>
 			}
-			else
+			@if (Model.Type.Name == "News")
 			{
 				<h4>Каченo на @Model.CreatedOn.ToShortDateString()</h4>
 			}

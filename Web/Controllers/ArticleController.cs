@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Web.Helpers;
 using Web.Models;
 using Web.Services;
@@ -35,76 +33,81 @@ namespace Web.Controllers
 		[Route("article/create/{typeString}")]
 		public IActionResult Create([FromRoute] string typeString)
 		{
-			CreateArticleViewModel model = new CreateArticleViewModel();
-			model.Type = typeString;
-			model.Heading = this._articleTypeService.GetType(model.Type).Heading;
-			return View(model);
-
-			//if (Logged.IsLogged())
-			//{
-			//	return View(new CreateArticleViewModel());
-			//}
-			//else
-			//{
-			//	return Unauthorized();
-			//}
+			if (Logged.IsLogged())
+			{
+				CreateArticleViewModel model = new CreateArticleViewModel();
+				model.Type = typeString;
+				model.Heading = this._articleTypeService.GetType(model.Type).Heading;
+				return View(model);
+			}
+			else
+			{
+				return Unauthorized();
+			}
 		}
 
 		[HttpPost]
 		[Route("article/create/{typeString}")]
 		public IActionResult Create([FromForm] CreateArticleViewModel model)
 		{
-			if (ModelState.IsValid)
+			if (Logged.IsLogged())
 			{
-				Article article = new Article();
-				article.Title = model.Title;
-				article.Content = model.Content;
-				article.Subtitle = model.Subtitle;
-				article.CreatedOn = DateTime.Now;
-				article.PostedBy = null;
-				article.Type = this._articleTypeService.GetType(model.Type);
-
-				if(model.Type == "NormDocument")
+				if (ModelState.IsValid)
 				{
-					article.NormType = ParseEnum.NormDocumentType(model.NormDocumentType);
-				}
+					Article article = new Article();
+					article.Title = model.Title;
+					article.Content = model.Content;
+					article.Subtitle = model.Subtitle;
+					article.CreatedOn = DateTime.Now;
+					article.PostedBy = null;
+					article.Type = this._articleTypeService.GetType(model.Type);
 
-				if(model.Type == "News")
-				{
-					article.Target = ParseEnum.TargetGroup(model.TargetGroup);
-				}
-
-				if (model.File != null)
-				{
-					string patern = Path.Combine(this._webHost.WebRootPath, "files");
-					string fileName = Guid.NewGuid() + "-" + model.File.FileName;
-					string filePathern = Path.Combine(patern, fileName);
-
-					using (var fileStream = new FileStream(filePathern, FileMode.Create))
+					if (model.Type == "NormDocument")
 					{
-						model.File.CopyTo(fileStream);
+						article.NormType = ParseEnum.NormDocumentType(model.NormDocumentType);
 					}
-					article.FilePath = Path.Combine("Files", fileName);
+
+					if (model.Type == "News")
+					{
+						article.Target = ParseEnum.TargetGroup(model.TargetGroup);
+					}
+
+					if (model.File != null)
+					{
+						string patern = Path.Combine(this._webHost.WebRootPath, "files");
+						string fileName = Guid.NewGuid() + "-" + model.File.FileName;
+						string filePathern = Path.Combine(patern, fileName);
+
+						using (var fileStream = new FileStream(filePathern, FileMode.Create))
+						{
+							model.File.CopyTo(fileStream);
+						}
+						article.FilePath = Path.Combine("Files", fileName);
+					}
+					else
+					{
+						article.FilePath = null;
+					}
+
+					try
+					{
+						this._articleService.CreateArticle(article);
+					}
+					catch
+					{
+						return BadRequest();
+					}
+
+					return RedirectToAction("Index", "Article");
 				}
 				else
 				{
-					article.FilePath = null;
+					return View(model);
 				}
-
-				try
-				{
-					this._articleService.CreateArticle(article);
-				}
-				catch
-				{
-					return BadRequest();
-				}
-
-				return RedirectToAction("Index", "Article");
 			}
 			else
 			{
-				return View(model);
+				return Unauthorized();
 			}
 		}
 		
@@ -112,6 +115,12 @@ namespace Web.Controllers
 		[Route("article/open/{id}")]
 		public IActionResult Open([FromRoute] string id)
 		{
+			if(this._articleService.GetArticle(id).Type.Name == "Project")
+			{
+				return View("Project", this._articleService.GetArticle(id));
+			}
+
+
 			return View(this._articleService.GetArticle(id));
 		}
 	}

@@ -15,10 +15,18 @@ namespace Web.Services
 			this._dbContext = dbContext;
 		}
 
-		public List<Article> GetArticles() => this._dbContext.Articles.Include(x => x.PostedBy).ToList();
+		public List<Article> GetArticles() => this._dbContext.Articles.Include(x => x.PostedBy).Include(x => x.Type).Include(x => x.AdditionalFiles).ToList();
 
-		public List<Article> GetArticlesFromType(string typeId) => this._dbContext.Articles.Include(x => x.PostedBy)
-			.Include(x => x.Type).Where(x => x.TypeId == typeId).OrderByDescending(x => x.CreatedOn).ToList();
+		public List<Article> GetArticlesFromType(string typeId)
+		{
+			List<Article> articles = this._dbContext.Articles.Include(x => x.PostedBy)
+				.Include(x => x.Type)
+				.Where(x => x.TypeId == typeId)
+				.Include(x => x.AdditionalFiles)
+				.OrderByDescending(x => x.CreatedOn).ToList();
+
+			return articles;
+		}
 
 		public void CreateArticle(Article article)
 		{

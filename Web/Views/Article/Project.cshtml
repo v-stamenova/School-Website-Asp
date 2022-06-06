@@ -1,0 +1,51 @@
+﻿@model Article
+
+<div class="container open-sans">
+	<div class="row mb-3">
+		<div class="col-md-12">
+			<h2 class="mt-5 bold">@Model.Title</h2>
+			@if (Model.Subtitle is not null)
+			{
+				<h4>@Model.Subtitle</h4>
+			}
+		</div>
+	</div>
+	<hr />
+	<div class="row">
+		<div class="col-md-12 align-items-center">
+			@if (Model.FilePath is not null)
+			{
+				@if (CheckIf.PathIsOfImage(Model.FilePath))
+				{
+					<img class="img-fluid align-self-center" src="~/@Model.FilePath" />
+				}
+				else
+				{
+					<a href="~/@Model.FilePath">Приложен документ</a>
+				}
+			}
+			<h4 style="white-space: pre-line" class="text-center">
+				@Model.Content
+			</h4>
+			<br />
+			<hr />
+			@if (Model.AdditionalFiles is not null)
+			{
+				<article>
+					@foreach (AdditionalFile file in Model.AdditionalFiles)
+					{
+						<div class="post-preview">
+							<a href="~/@file.Address">
+								<h4 class="post-title text-center">
+									@file.Heading
+								</h4>
+							</a>
+						</div>
+					}
+				</article>
+			}
+			<br />
+			<hr />
+		</div>
+	</div>
+</div>
