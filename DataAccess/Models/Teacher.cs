@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models
 {
 	public class Teacher
 	{
+		public Teacher()
+		{
+			this.HomeroomClasses = new List<Class>();
+		}
+
 		[Key]
 		public string Username { get; set; }
 
@@ -26,5 +32,7 @@ namespace DataAccess.Models
 
 		public Subject Subject { get; set; }
 		public string SubjectId { get; set; }
+
+		public List<Class> HomeroomClasses { get; set; }
 	}
 }

@@ -1,0 +1,55 @@
+﻿@model Student
+
+@{ ViewData["Title"] = "Create"; }
+@inject GraduateService graduateService
+
+<div class="container open-sans">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="mt-5 mb-4">Добави нов ученик</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<form asp-action="AddStudent" asp-controller="graduate" method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label class="control-label">Име</label>
+					<input asp-for="FirstName" class="form-control" placeholder="Въведете име на ученика..." />
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Презиме (инициал)</label>
+					<input maxlength="1" asp-for="MiddleNameInitial" class="form-control" placeholder="Въведете инициала на презимето на ученика..." />
+					<span asp-validation-for="MiddleNameInitial" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Фамилия</label>
+					<input asp-for="FamilyName" class="form-control" placeholder="Въведете фамилия на ученика..." />
+					<span asp-validation-for="FamilyName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="control-label dark-heading">Випуск</label>
+					<select class="form-control dark-heading" asp-for="Year">
+						@foreach (var c in graduateService.GetClasses().Select(x => x.Year).Distinct())
+						{
+							<option>@c</option>
+						}
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="control-label dark-heading">Паралелка</label>
+					<select class="form-control dark-heading" asp-for="Letter">
+						@foreach (var c in graduateService.GetClasses().Select(x => x.Letter).Distinct())
+						{
+							<option>@c</option>
+						}
+					</select>
+				</div>
+				<div class="form-group pt-4 open-sans bold">
+					<input type="submit" value="Добави" class="btn btn-block big-button" style="font-size: 20px;" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

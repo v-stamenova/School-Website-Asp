@@ -1,0 +1,71 @@
+﻿@model List<Class>
+
+<header class="masthead" style="background-image: url('../../images/banners/home.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">Випуск @Model.First().Year</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	@foreach (Class curClass in Model)
+	{
+		<div class="row p-3 pb-2 pt-4">
+			<div class="col my-auto">
+				<div class="container align-self-center text-center lora">
+					<h2>@curClass.Letter клас</h2>
+					<p>
+						@foreach (Student student in curClass.Students)
+						{
+							@string.Concat(student.FirstName, " ", student.MiddleNameInitial, ". ", student.FamilyName)<br />
+						}
+					</p>
+				</div>
+			</div>
+			@if (curClass.Photos.Count == 2)
+			{
+				<div class="col-6">
+					@foreach (Photo photo in curClass.Photos)
+					{
+						<div class="container-sm pb-2">
+							<a href="~/@photo.Address">
+								<img class="img-fluid" src="~/@photo.Address" />
+							</a>
+						</div>
+					}
+
+				</div>
+			}
+			@if (curClass.Photos.Count == 4)
+			{
+				<div class="col-6">
+					@for (int i = 0; i < 2; i++)
+					{
+						<div class="container-sm pb-2">
+							<a href="~/@curClass.Photos[i].Address">
+								<img class="img-fluid" src="~/@curClass.Photos[i].Address" />
+							</a>
+						</div>
+					}
+				</div>
+
+				@for (int i = 2; i < 4; i++)
+				{
+					<div class="col-6">
+						<div class="container-sm pb-2">
+							<a href="~/@curClass.Photos[i].Address">
+								<img class="img-fluid" src="~/@curClass.Photos[i].Address" />
+							</a>
+						</div>
+					</div>
+				}
+			}
+		</div>
+		<hr />
+	}
+</div>

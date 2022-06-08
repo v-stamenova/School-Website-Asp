@@ -1,0 +1,31 @@
+﻿@inject GraduateService graduateService;
+
+<header class="masthead" style="background-image: url('../../images/banners/home.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">Випуски</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto pb-3">
+			@foreach (string year in graduateService.GetClasses().Select(x => x.Year).Distinct())
+			{
+				<div class="post-preview">
+					<a asp-controller="Graduate" asp-action="ClassOf" asp-route-id="@year">
+						<h2 class="post-title bold">
+							Випуск @year
+						</h2>
+					</a>
+				</div>
+				<hr>
+			}
+		</div>
+	</div>
+</div>

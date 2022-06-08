@@ -128,6 +128,24 @@ namespace DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Letter")
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("HomeroomTeacherId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Year", "Letter");
+
+                    b.HasIndex("HomeroomTeacherId");
+
+                    b.ToTable("Classes");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -189,6 +207,31 @@ namespace DataAccess.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClassLetter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("ClassYear")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassYear", "ClassLetter");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -203,6 +246,39 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FamilyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Letter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("MiddleNameInitial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Year", "Letter");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Subject", b =>
@@ -307,6 +383,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.HasOne("DataAccess.Models.Teacher", "HomeroomTeacher")
+                        .WithMany("HomeroomClasses")
+                        .HasForeignKey("HomeroomTeacherId");
+
+                    b.Navigation("HomeroomTeacher");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Member", b =>
                 {
                     b.HasOne("DataAccess.Models.Role", "Role")
@@ -316,6 +401,24 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Photo", b =>
+                {
+                    b.HasOne("DataAccess.Models.Class", "Class")
+                        .WithMany("Photos")
+                        .HasForeignKey("ClassYear", "ClassLetter");
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Student", b =>
+                {
+                    b.HasOne("DataAccess.Models.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("Year", "Letter");
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Teacher", b =>
@@ -337,6 +440,13 @@ namespace DataAccess.Migrations
                     b.Navigation("Articles");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.Navigation("Photos");
+
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Role", b =>
                 {
                     b.Navigation("Members");
@@ -345,6 +455,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Subject", b =>
                 {
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Teacher", b =>
+                {
+                    b.Navigation("HomeroomClasses");
                 });
 
             modelBuilder.Entity("DataAccess.Models.User", b =>

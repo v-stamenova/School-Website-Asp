@@ -28,6 +28,12 @@ namespace DataAccess
 
 		public DbSet<AdditionalFile> AdditionalFiles { get; set; }
 
+		public DbSet<Photo> Photos { get; set; }
+
+		public DbSet<Student> Students { get; set; }
+
+		public DbSet<Class> Classes { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Employee>(entity =>
@@ -162,6 +168,44 @@ namespace DataAccess
 					.HasForeignKey(e => e.ArticleId);
 			});
 
+			modelBuilder.Entity<Student>(entity =>
+			{
+				entity.HasKey(x => x.Id);
+
+				entity.Property(e => e.FirstName)
+					.IsRequired();
+
+				entity.Property(e => e.MiddleNameInitial);
+
+				entity.Property(e => e.FamilyName)
+					.IsRequired();
+
+				entity.HasOne(e => e.Class)
+					.WithMany(c => c.Students)
+					.HasForeignKey(e => new { e.Year, e.Letter });
+			});
+
+			modelBuilder.Entity<Class>(entity =>
+			{
+				entity.HasKey(e => new { e.Year, e.Letter });
+
+				entity.HasOne(e => e.HomeroomTeacher)
+					.WithMany(t => t.HomeroomClasses)
+					.HasForeignKey(e => e.HomeroomTeacherId);
+			});
+
+			modelBuilder.Entity<Photo>(entity =>
+			{
+				entity.HasKey(e => e.Id);
+
+				entity.Property(e => e.Address)
+					.IsRequired();
+
+				entity.HasOne(e => e.Class)
+					.WithMany(c => c.Photos)
+					.HasForeignKey(e => new { e.ClassYear, e.ClassLetter });
+			});
+				
 			modelBuilder.Entity<User>().HasData
 			(
 				new User()
