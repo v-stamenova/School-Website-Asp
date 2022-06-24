@@ -1,0 +1,32 @@
+﻿@inject ArticleTypeService typeService
+
+<header class="masthead" style="background-image: url('../../images/banners/leading.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">Управление на съдържанието</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			<h2 style="color: rgb(52, 58, 64); text-indent: 10px" class="p-2">
+				Категории
+			</h2>
+			<div class="list-group list-group-flush pb-3">
+
+				@foreach (ArticleType type in typeService.GetTypes())
+				{
+					<a asp-controller="User" asp-action="Articles" asp-route-id="@type.Name" class="list-group-item list-group-item-action" style="font-size: 20px;">
+						@string.Concat(type.Heading[0].ToString().ToUpper(), type.Heading.Substring(1))
+					</a>
+				}
+			</div>
+		</div>
+	</div>
+</div>

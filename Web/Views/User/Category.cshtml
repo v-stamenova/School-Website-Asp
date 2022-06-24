@@ -1,0 +1,60 @@
+﻿@inject ArticleService articleService
+@model ArticleType
+
+<header class="masthead" style="background-image: url('../../images/banners/leading.jpg')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="site-heading">
+					<h1 class="open-sans custom-heading">@string.Concat(Model.Heading[0].ToString().ToUpper(), Model.Heading.Substring(1))</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			<a style="text-decoration: none !important;" asp-action="Create" asp-controller="Article" asp-route-id="@Model.Name">
+				<button type="button" class="btn btn-info btn-lg btn-block">Добави @Model.Heading</button>
+			</a>
+
+			<ul class="list-group list-group-flush pb-3 pt-5">
+				@foreach (Article article in articleService.GetArticlesFromType(Model.Name))
+				{
+					@if (article.Title.Length < 50)
+					{
+						<li class="list-group-item" style="font-size: 20px;">
+							<a class="li-a" asp-controller="article" asp-action="open" asp-route-id="@article.Id">
+								@article.Title
+							</a>
+							<a asp-controller="article" asp-action="delete" asp-route-id="@article.Id">
+								<span class="float-right li-a">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+										<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+									</svg>
+								</span>
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="list-group-item" style="font-size: 20px;">
+							<a class="li-a" asp-controller="article" asp-action="open" asp-route-id="@article.Id">
+								@string.Concat(article.Title.Remove(50), "...")
+							</a>
+							<a asp-controller="article" asp-action="delete" asp-route-id="@article.Id">
+								<span class="float-right li-a">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+										<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+									</svg>
+								</span>
+							</a>
+						</li>
+					}
+				}
+			</ul>
+		</div>
+	</div>
+</div>

@@ -123,5 +123,20 @@ namespace Web.Controllers
 
 			return View(this._articleService.GetArticle(id));
 		}
+
+		[HttpGet]
+		[Route("article/delete/{id}")]
+		public IActionResult Delete([FromRoute] string id)
+		{
+			if (Logged.IsLogged())
+			{
+				this._articleService.DeleteArticle(id);
+				return RedirectToAction("Index", "User");
+			}
+			else
+			{
+				return Unauthorized();
+			}
+		}
 	}
 }

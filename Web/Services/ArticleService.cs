@@ -35,5 +35,12 @@ namespace Web.Services
 		}
 
 		public Article GetArticle(string id) => this.GetArticles().FirstOrDefault(x => x.Id.ToString() == id);
+
+		public void DeleteArticle(string id)
+		{
+			Article forDelete = this.GetArticle(id);
+			this._dbContext.Remove(forDelete);
+			this._dbContext.SaveChanges();
+		}
 	}
 }

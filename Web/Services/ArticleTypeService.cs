@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using DataAccess.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Web.Services
@@ -13,6 +14,8 @@ namespace Web.Services
 			this._dbContext = dbContext;
 		}
 
-		public ArticleType GetType(string name) => this._dbContext.Types.FirstOrDefault(x => x.Name == name);
+		public ArticleType GetType(string name) => this.GetTypes().FirstOrDefault(x => x.Name == name);
+
+		public List<ArticleType> GetTypes() => this._dbContext.Types.ToList();
 	}
 }

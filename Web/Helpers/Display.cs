@@ -31,5 +31,7 @@ namespace Web.Helpers
 
 			return false;
 		}
+
+		public static string PageTitle { get; set; }
 	}
 }
