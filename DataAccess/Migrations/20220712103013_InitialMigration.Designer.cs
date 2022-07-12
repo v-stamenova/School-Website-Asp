@@ -3,52 +3,78 @@ using System;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20220521122949_AddArticleTypeAsTable")]
-    partial class AddArticleTypeAsTable
+    [Migration("20220712103013_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.17")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.17");
+
+            modelBuilder.Entity("DataAccess.Models.AdditionalFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Heading")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("AdditionalFiles");
+                });
 
             modelBuilder.Entity("DataAccess.Models.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("NormType")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostedById")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("Subtitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Target")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TypeId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.HasKey("Id");
 
@@ -62,11 +88,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.ArticleType", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("Heading")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Name");
 
@@ -100,27 +126,44 @@ namespace DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.Property<string>("Year")
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<char>("Letter")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HomeroomTeacherId")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Year", "Letter");
+
+                    b.HasIndex("HomeroomTeacherId");
+
+                    b.ToTable("Classes");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("JobDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -131,25 +174,24 @@ namespace DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsInSchoolBoard")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -161,30 +203,82 @@ namespace DataAccess.Migrations
                     b.ToTable("Members");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<char>("ClassLetter")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClassYear")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassYear", "ClassLetter");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("FamilyName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<char>("Letter")
+                        .HasColumnType("int");
+
+                    b.Property<char>("MiddleNameInitial")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Year", "Letter");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Subject", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -194,36 +288,36 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Teacher", b =>
                 {
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("AdditionalRole")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Biography")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Birthdate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsHeadTeacher")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SubjectId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.HasKey("Username");
 
@@ -235,11 +329,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.User", b =>
                 {
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Username");
 
@@ -251,6 +345,17 @@ namespace DataAccess.Migrations
                             Username = "Admin",
                             Password = "RandomPassword"
                         });
+                });
+
+            modelBuilder.Entity("DataAccess.Models.AdditionalFile", b =>
+                {
+                    b.HasOne("DataAccess.Models.Article", "Article")
+                        .WithMany("AdditionalFiles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Article", b =>
@@ -268,6 +373,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.HasOne("DataAccess.Models.Teacher", "HomeroomTeacher")
+                        .WithMany("HomeroomClasses")
+                        .HasForeignKey("HomeroomTeacherId");
+
+                    b.Navigation("HomeroomTeacher");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Member", b =>
                 {
                     b.HasOne("DataAccess.Models.Role", "Role")
@@ -279,6 +393,24 @@ namespace DataAccess.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Photo", b =>
+                {
+                    b.HasOne("DataAccess.Models.Class", "Class")
+                        .WithMany("Photos")
+                        .HasForeignKey("ClassYear", "ClassLetter");
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Student", b =>
+                {
+                    b.HasOne("DataAccess.Models.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("Year", "Letter");
+
+                    b.Navigation("Class");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Teacher", b =>
                 {
                     b.HasOne("DataAccess.Models.Subject", "Subject")
@@ -288,9 +420,21 @@ namespace DataAccess.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Article", b =>
+                {
+                    b.Navigation("AdditionalFiles");
+                });
+
             modelBuilder.Entity("DataAccess.Models.ArticleType", b =>
                 {
                     b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Class", b =>
+                {
+                    b.Navigation("Photos");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>
@@ -301,6 +445,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("DataAccess.Models.Subject", b =>
                 {
                     b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Teacher", b =>
+                {
+                    b.Navigation("HomeroomClasses");
                 });
 
             modelBuilder.Entity("DataAccess.Models.User", b =>
