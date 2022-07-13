@@ -175,8 +175,6 @@ namespace DataAccess
 				entity.Property(e => e.FirstName)
 					.IsRequired();
 
-				entity.Property(e => e.MiddleNameInitial);
-
 				entity.Property(e => e.FamilyName)
 					.IsRequired();
 

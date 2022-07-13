@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Models
 {
@@ -11,6 +12,8 @@ namespace DataAccess.Models
 		}
 
 		public string Year { get; set; }
+
+		[Column(TypeName = "int")]
 		public char Letter { get; set; }
 
 		public Teacher HomeroomTeacher { get; set; }

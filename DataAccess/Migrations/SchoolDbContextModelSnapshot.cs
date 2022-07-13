@@ -129,7 +129,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Year")
                         .HasColumnType("varchar(767)");
 
-                    b.Property<char>("Letter")
+                    b.Property<int>("Letter")
                         .HasColumnType("int");
 
                     b.Property<string>("HomeroomTeacherId")
@@ -211,7 +211,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<char>("ClassLetter")
+                    b.Property<int>("ClassLetter")
                         .HasColumnType("int");
 
                     b.Property<string>("ClassYear")
@@ -253,10 +253,10 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<char>("Letter")
+                    b.Property<int>("Letter")
                         .HasColumnType("int");
 
-                    b.Property<char>("MiddleNameInitial")
+                    b.Property<int>("MiddleNameInitial")
                         .HasColumnType("int");
 
                     b.Property<string>("Year")
