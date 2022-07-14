@@ -1,22 +1,49 @@
 ﻿@model Teacher
 
-<div class="container mt-3 p-3 bg-dark rounded">
-	<div class="row mt-2 open-sans">
-		<div class="col my-auto text-white">
-			<div class="container align-self-center">
-				<h2 class="bold">@Model.FirstName @Model.MiddleName @Model.LastName</h2>
-				<h4>Преподавател по @Model.Subject.FullName</h4>
-				<hr class="bg-info" style="height: 1px;" />
-				<h5>@Model.Biography</h5>
+@if (Model.Subject.ColorHex.Length > 10)
+{
+	<div class="container mt-3 p-3 rounded" style="background: @Model.Subject.ColorHex">
+		<div class="row mt-2 open-sans">
+			<div class="col my-auto text-white">
+				<div class="container align-self-center">
+					<h2 class="bold">@Model.FirstName @Model.MiddleName @Model.LastName</h2>
+					<h4>Преподавател по @Model.Subject.FullName</h4>
+					<hr class="bg-light" style="height: 1px;" />
+					<h5>@Model.Biography</h5>
+				</div>
 			</div>
-		</div>
-		<div class="col my-auto">
-			<div class="container-sm">
-				<img class="img-fluid" src="~/images/teachers/@(Model.Username).png" />
+			<div class="col my-auto">
+				<div class="container-sm">
+					<img class="img-fluid" src="~/images/teachers/@(Model.Username).png" />
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="container">
-	<br />
-</div>
+	<div class="container">
+		<br />
+	</div>
+
+}
+else
+{
+	<div class="container mt-3 p-3 rounded" style="background-color: @Model.Subject.ColorHex">
+		<div class="row mt-2 open-sans">
+			<div class="col my-auto text-white">
+				<div class="container align-self-center">
+					<h2 class="bold">@Model.FirstName @Model.MiddleName @Model.LastName</h2>
+					<h4>Преподавател по @Model.Subject.FullName</h4>
+					<hr class="bg-light" style="height: 1px;" />
+					<h5>@Model.Biography</h5>
+				</div>
+			</div>
+			<div class="col my-auto">
+				<div class="container-sm">
+					<img class="img-fluid" src="~/images/teachers/@(Model.Username).png" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<br />
+	</div>
+}

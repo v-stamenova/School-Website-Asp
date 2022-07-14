@@ -82,6 +82,9 @@ namespace DataAccess
 
 				entity.Property(e => e.FullName)
 					.IsRequired();
+
+				entity.Property(e => e.ColorHex)
+					.IsRequired();
 			});
 
 			modelBuilder.Entity<Teacher>(entity =>

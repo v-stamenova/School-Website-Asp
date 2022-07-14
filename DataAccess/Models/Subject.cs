@@ -13,6 +13,8 @@ namespace DataAccess.Models
 
 		public string FullName { get; set; }
 
+		public string ColorHex { get; set; }
+
 		public ICollection<Teacher> Teachers { get; set; }
 	}
 }
