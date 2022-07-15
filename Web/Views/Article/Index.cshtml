@@ -18,7 +18,7 @@
 			@foreach (Article article in Model)
 			{
 				<div class="post-preview">
-					@if (article.Content is not null)
+					@if (!string.IsNullOrWhiteSpace(article.Content))
 					{
 						<a asp-controller="article" asp-action="open" asp-route-id="@article.Id">
 							<h2 class="post-title bold">
